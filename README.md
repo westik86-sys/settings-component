@@ -110,6 +110,16 @@ Run tests from the package directory:
 swift test
 ```
 
+## Example App
+
+Use the included iOS example app to inspect and iterate on the UI:
+
+```bash
+open Example/DotSettingsKitExample.xcodeproj
+```
+
+Run the `DotSettingsKitExample` scheme on an iPhone simulator. The example project uses this package through a local path dependency, so changes in `Sources/DotSettingsKit` are picked up after rebuilding the example app.
+
 ## Release
 
 Tag versions with semantic versioning:

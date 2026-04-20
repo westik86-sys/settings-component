@@ -2,5 +2,11 @@
 .swiftpm/
 DerivedData/
 *.xcodeproj
+!Example/
+!Example/DotSettingsKitExample.xcodeproj/
+!Example/DotSettingsKitExample.xcodeproj/project.pbxproj
+!Example/DotSettingsKitExample.xcodeproj/xcshareddata/
+!Example/DotSettingsKitExample.xcodeproj/xcshareddata/xcschemes/
+!Example/DotSettingsKitExample.xcodeproj/xcshareddata/xcschemes/DotSettingsKitExample.xcscheme
 *.xcworkspace
 xcuserdata/
