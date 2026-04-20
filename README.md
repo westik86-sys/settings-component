@@ -26,7 +26,7 @@ For local development from this workspace, use:
 When using the GitHub repository, use:
 
 ```swift
-.package(url: "https://github.com/westik86-sys/settings-component.git", from: "0.1.0")
+.package(url: "https://github.com/westik86-sys/settings-component.git", from: "0.2.0")
 ```
 
 ## Usage
@@ -125,6 +125,6 @@ Run the `DotSettingsKitExample` scheme on an iPhone simulator. The example proje
 Tag versions with semantic versioning:
 
 ```bash
-git tag 0.1.0
-git push origin 0.1.0
+git tag 0.2.0
+git push origin 0.2.0
 ```
