@@ -2,6 +2,13 @@
 
 Reusable SwiftUI settings button and native sheet components for small apps.
 
+`DotSettingsKit` provides a fixed visual contract for settings UI:
+
+- bottom safe-area placement that follows native iOS spacing
+- a 44 pt text-only `Settings` button with a Liquid Glass material look
+- automatic Light/Dark appearance from the host app environment
+- a native settings sheet with customizable rows, sliders, toggles, pickers, links, and actions
+
 ## Installation
 
 Add this repository as a Swift Package dependency in Xcode:
@@ -31,29 +38,35 @@ import DotSettingsKit
 struct ContentView: View {
     var body: some View {
         Text("App")
-            .toolbar {
-                SettingsButton {
-                    SettingsSheet {
-                        SettingsSection("Appearance") {
-                            SettingsPicker(
-                                "Theme",
-                                key: "theme",
-                                defaultValue: "system",
-                                options: [
-                                    .init("System", value: "system"),
-                                    .init("Light", value: "light"),
-                                    .init("Dark", value: "dark")
-                                ]
-                            )
-                        }
+            .settingsButton {
+                SettingsSheet {
+                    SettingsSection("Appearance") {
+                        SettingsPicker(
+                            "Theme",
+                            key: "theme",
+                            defaultValue: "system",
+                            options: [
+                                .init("System", value: "system"),
+                                .init("Light", value: "light"),
+                                .init("Dark", value: "dark")
+                            ]
+                        )
+                    }
 
-                        SettingsSection("Behavior") {
-                            SettingsToggle(
-                                "Haptics",
-                                key: "haptics",
-                                defaultValue: true
-                            )
-                        }
+                    SettingsSection("Behavior") {
+                        SettingsSlider(
+                            "Particle Speed",
+                            key: "particleSpeed",
+                            defaultValue: 0.5,
+                            in: 0...1,
+                            step: 0.05
+                        )
+
+                        SettingsToggle(
+                            "Haptics",
+                            key: "haptics",
+                            defaultValue: true
+                        )
                     }
                 }
             }
@@ -79,6 +92,7 @@ SettingsPicker(
 
 ## Components
 
+- `View.settingsButton`
 - `SettingsButton`
 - `SettingsSheet`
 - `SettingsSection`

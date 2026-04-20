@@ -20,8 +20,30 @@ public struct SettingsSheet<Content: View>: View {
             Form {
                 content()
             }
+            .scrollContentBackground(.hidden)
+            .background(SettingsSheetBackground())
             .navigationTitle(title)
         }
         .presentationDetents(detents)
+        #if os(iOS)
+        .presentationDragIndicator(.visible)
+        #endif
+    }
+}
+
+private struct SettingsSheetBackground: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    var body: some View {
+        Rectangle()
+            .fill(.regularMaterial)
+            .overlay(adaptiveTint)
+            .ignoresSafeArea()
+    }
+
+    private var adaptiveTint: Color {
+        colorScheme == .dark
+            ? Color.black.opacity(0.18)
+            : Color.white.opacity(0.16)
     }
 }
