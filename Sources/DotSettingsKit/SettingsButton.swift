@@ -171,6 +171,7 @@ private struct SettingsButtonModifier<SheetContent: View>: ViewModifier {
 
     func body(content: Content) -> some View {
         content
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .safeAreaInset(edge: .bottom, spacing: 0) {
                 SettingsButton(title, content: sheetContent)
                     .padding(.horizontal, 16)

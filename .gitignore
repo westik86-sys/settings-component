@@ -9,4 +9,6 @@ DerivedData/
 !Example/DotSettingsKitExample.xcodeproj/xcshareddata/xcschemes/
 !Example/DotSettingsKitExample.xcodeproj/xcshareddata/xcschemes/DotSettingsKitExample.xcscheme
 *.xcworkspace
+!DotSettingsKit.xcworkspace/
+!DotSettingsKit.xcworkspace/contents.xcworkspacedata
 xcuserdata/
