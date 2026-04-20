@@ -5,7 +5,7 @@ Reusable SwiftUI settings button and native sheet components for small apps.
 `DotSettingsKit` provides a fixed visual contract for settings UI:
 
 - bottom safe-area placement that follows native iOS spacing
-- a 44 pt text-only `Settings` button with a Liquid Glass material look
+- a text-only `Settings` button styled for iOS `ControlSize.regular` with a Liquid Glass material look
 - automatic Light/Dark appearance from the host app environment
 - a native settings sheet with customizable rows, sliders, toggles, pickers, links, and actions
 

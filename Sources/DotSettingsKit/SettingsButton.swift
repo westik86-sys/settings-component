@@ -20,10 +20,9 @@ public struct SettingsButton<SheetContent: View>: View {
             isPresented = true
         } label: {
             Text(title)
-                .font(.system(size: 17, weight: .semibold))
-                .frame(maxWidth: .infinity, minHeight: 44, maxHeight: 44)
                 .contentShape(Capsule())
         }
+        .controlSize(.regular)
         .buttonStyle(.liquidGlassSettings)
         .accessibilityLabel(title)
         .sheet(isPresented: $isPresented, content: sheetContent)
@@ -41,13 +40,16 @@ public extension View {
 
 public struct LiquidGlassSettingsButtonStyle: ButtonStyle {
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.controlSize) private var controlSize
 
     public init() {}
 
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .font(metrics.font)
             .foregroundStyle(.primary)
-            .padding(.horizontal, 18)
+            .frame(minHeight: metrics.height)
+            .padding(.horizontal, metrics.horizontalPadding)
             .background {
                 LiquidGlassButtonBackground()
             }
@@ -72,6 +74,59 @@ public struct LiquidGlassSettingsButtonStyle: ButtonStyle {
 
     private var shadowColor: Color {
         colorScheme == .dark ? .black : .gray
+    }
+
+    private var metrics: LiquidGlassSettingsButtonMetrics {
+        LiquidGlassSettingsButtonMetrics(controlSize: controlSize)
+    }
+}
+
+private struct LiquidGlassSettingsButtonMetrics {
+    let controlSize: ControlSize
+
+    var font: Font {
+        switch controlSize {
+        case .mini:
+            return .caption.weight(.semibold)
+        case .small:
+            return .callout.weight(.semibold)
+        case .regular:
+            return .body.weight(.semibold)
+        case .large, .extraLarge:
+            return .title3.weight(.semibold)
+        @unknown default:
+            return .callout.weight(.semibold)
+        }
+    }
+
+    var height: CGFloat {
+        switch controlSize {
+        case .mini:
+            return 26
+        case .small:
+            return 32
+        case .regular:
+            return 44
+        case .large, .extraLarge:
+            return 52
+        @unknown default:
+            return 32
+        }
+    }
+
+    var horizontalPadding: CGFloat {
+        switch controlSize {
+        case .mini:
+            return 12
+        case .small:
+            return 14
+        case .regular:
+            return 18
+        case .large, .extraLarge:
+            return 22
+        @unknown default:
+            return 14
+        }
     }
 }
 
