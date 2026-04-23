@@ -8,6 +8,7 @@ Reusable SwiftUI settings button and native sheet components for small apps.
 - a text-only `Settings` button styled for iOS `ControlSize.regular` with a Liquid Glass material look
 - automatic Light/Dark appearance from the host app environment
 - a native settings sheet with customizable rows, sliders, toggles, pickers, links, and actions
+- an explicit opt-in mode when you want the host app to style the settings button instead
 
 ## Installation
 
@@ -76,6 +77,35 @@ struct ContentView: View {
 }
 ```
 
+By default, `SettingsButton` and `.settingsButton` use the package's stable visual style so the button looks the same across host apps.
+
+If you intentionally want the host app's `buttonStyle`, `tint`, or `controlSize` environment to drive the button appearance, opt into inheritance explicitly:
+
+```swift
+SettingsButton("Settings", appearance: .inherited) {
+    SettingsSheet {
+        SettingsSection("Appearance") {
+            SettingsToggle("Haptics", key: "haptics", defaultValue: true)
+        }
+    }
+}
+.buttonStyle(.borderedProminent)
+.controlSize(.large)
+```
+
+The same appearance option is available on the view modifier:
+
+```swift
+Text("App")
+    .settingsButton("Settings", appearance: .inherited) {
+        SettingsSheet {
+            SettingsSection("Behavior") {
+                SettingsToggle("Haptics", key: "haptics", defaultValue: true)
+            }
+        }
+    }
+```
+
 Use bindings when the app already owns settings state:
 
 ```swift
@@ -131,6 +161,11 @@ The example project uses this package through a local path dependency, so change
 - Keeps `.settingsButton` pinned to the bottom of the available screen, even when applied to compact content.
 - Adds `DotSettingsKit.xcworkspace` for opening the package and demo app together in Xcode.
 - Updates demo instructions and package installation guidance.
+
+### Next
+
+- Keeps the package-owned settings button styling as the default behavior.
+- Adds `SettingsButtonAppearance.inherited` for projects that intentionally want host styling.
 
 Tag versions with semantic versioning:
 
