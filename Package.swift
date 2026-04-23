@@ -12,10 +12,19 @@ let package = Package(
         .library(
             name: "DotSettingsKit",
             targets: ["DotSettingsKit"]
+        ),
+        .executable(
+            name: "DotSettingsKitExample",
+            targets: ["DotSettingsKitExample"]
         )
     ],
     targets: [
         .target(name: "DotSettingsKit"),
+        .executableTarget(
+            name: "DotSettingsKitExample",
+            dependencies: ["DotSettingsKit"],
+            path: "Example/DotSettingsKitExample"
+        ),
         .testTarget(
             name: "DotSettingsKitTests",
             dependencies: ["DotSettingsKit"]
