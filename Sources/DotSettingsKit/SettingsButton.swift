@@ -1,17 +1,27 @@
 import SwiftUI
 
+public enum SettingsButtonAppearance: Sendable {
+    case automatic
+    case inherited
+}
+
 public struct SettingsButton<SheetContent: View>: View {
     @State private var isPresented = false
 
     private let title: LocalizedStringKey
+    private let systemImage: String?
+    private let appearance: SettingsButtonAppearance
     private let sheetContent: () -> SheetContent
 
     public init(
         _ title: LocalizedStringKey = "Settings",
         systemImage: String? = nil,
+        appearance: SettingsButtonAppearance = .automatic,
         @ViewBuilder content: @escaping () -> SheetContent
     ) {
         self.title = title
+        self.systemImage = systemImage
+        self.appearance = appearance
         self.sheetContent = content
     }
 
@@ -19,22 +29,40 @@ public struct SettingsButton<SheetContent: View>: View {
         Button {
             isPresented = true
         } label: {
+            buttonLabel
+        }
+        .modifier(SettingsButtonAppearanceModifier(appearance: appearance))
+        .accessibilityLabel(title)
+        .sheet(isPresented: $isPresented, content: sheetContent)
+    }
+
+    @ViewBuilder
+    private var buttonLabel: some View {
+        if let systemImage {
+            Label(title, systemImage: systemImage)
+                .contentShape(Capsule())
+        } else {
             Text(title)
                 .contentShape(Capsule())
         }
-        .controlSize(.regular)
-        .buttonStyle(.liquidGlassSettings)
-        .accessibilityLabel(title)
-        .sheet(isPresented: $isPresented, content: sheetContent)
     }
 }
 
 public extension View {
     func settingsButton<SheetContent: View>(
         _ title: LocalizedStringKey = "Settings",
+        systemImage: String? = nil,
+        appearance: SettingsButtonAppearance = .automatic,
         @ViewBuilder content: @escaping () -> SheetContent
     ) -> some View {
-        modifier(SettingsButtonModifier(title: title, sheetContent: content))
+        modifier(
+            SettingsButtonModifier(
+                title: title,
+                systemImage: systemImage,
+                appearance: appearance,
+                sheetContent: content
+            )
+        )
     }
 }
 
@@ -157,15 +185,36 @@ public extension ButtonStyle where Self == LiquidGlassSettingsButtonStyle {
     }
 }
 
+private struct SettingsButtonAppearanceModifier: ViewModifier {
+    let appearance: SettingsButtonAppearance
+
+    func body(content: Content) -> some View {
+        switch appearance {
+        case .automatic:
+            content
+                .controlSize(.regular)
+                .buttonStyle(.liquidGlassSettings)
+        case .inherited:
+            content
+        }
+    }
+}
+
 private struct SettingsButtonModifier<SheetContent: View>: ViewModifier {
     private let title: LocalizedStringKey
+    private let systemImage: String?
+    private let appearance: SettingsButtonAppearance
     private let sheetContent: () -> SheetContent
 
     init(
         title: LocalizedStringKey,
+        systemImage: String?,
+        appearance: SettingsButtonAppearance,
         @ViewBuilder sheetContent: @escaping () -> SheetContent
     ) {
         self.title = title
+        self.systemImage = systemImage
+        self.appearance = appearance
         self.sheetContent = sheetContent
     }
 
@@ -173,7 +222,12 @@ private struct SettingsButtonModifier<SheetContent: View>: ViewModifier {
         content
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .safeAreaInset(edge: .bottom, spacing: 0) {
-                SettingsButton(title, content: sheetContent)
+                SettingsButton(
+                    title,
+                    systemImage: systemImage,
+                    appearance: appearance,
+                    content: sheetContent
+                )
                     .padding(.horizontal, 16)
                     .padding(.top, 8)
                     .padding(.bottom, 8)

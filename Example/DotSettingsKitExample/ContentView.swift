@@ -26,6 +26,7 @@ struct ContentView: View {
                     Label("Particle speed: \(particleSpeed, specifier: "%.2f")", systemImage: "slider.horizontal.3")
                     Label("Haptics: \(haptics ? "On" : "Off")", systemImage: "iphone.radiowaves.left.and.right")
                     Label("Sound: \(sound ? "On" : "Off")", systemImage: "speaker.wave.2")
+                    Label("Button style: Package default", systemImage: "button.programmable")
                 }
                 .font(.callout)
                 .padding(16)
